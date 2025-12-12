@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class KelolaUser extends Controller
+class ManageUserController extends Controller
 {
     // ====================== VIEW ======================
     public function index()
@@ -14,6 +14,7 @@ class KelolaUser extends Controller
         $data = [
             'data' => User::where('role', '!=', 0)->select('id', 'name', 'email', 'username', 'role', 'last_login_at')->get(),
             'title' => 'Kelola User',
+            'subtitle' => 'Daftar User',
         ];
         return view('page.kelolauser.index', $data);
     }
@@ -22,6 +23,7 @@ class KelolaUser extends Controller
     {
         $data = [
             'title' => 'Tambah User',
+            'subtitle' => 'Tambah User Baru',
         ];
         return view('page.kelolauser.create', $data);
     }
@@ -29,12 +31,14 @@ class KelolaUser extends Controller
     {
         $user = User::where('id', $id)->first();
         if (!$user) {
-            return redirect()->route('kelolauser.index')->with('error', 'User tidak ditemukan.');
+            flashError('User tidak ditemukan.');
+            return redirect()->back();
         }
 
         $data = [
             'user' => $user,
             'title' => 'Edit User',
+            'subtitle' => 'Edit User ' . $user->name,
         ];
         return view('page.kelolauser.update', $data);
     }
@@ -88,7 +92,8 @@ class KelolaUser extends Controller
         try {
             $user = User::where('id', $id)->first();
             if (!$user) {
-                return redirect()->route('kelolauser.index')->with('error', 'User tidak ditemukan.');
+                flashError('User tidak ditemukan.');
+                return redirect()->back();
             }
 
             $request->validate(
@@ -130,7 +135,8 @@ class KelolaUser extends Controller
         try {
             $user = User::where('id', $id)->first();
             if (!$user) {
-                return redirect()->route('kelolauser.index')->with('error', 'User tidak ditemukan.');
+                flashError('User tidak ditemukan.');
+                return redirect()->back();
             }
 
             $user->delete();
@@ -142,4 +148,4 @@ class KelolaUser extends Controller
             return redirect()->back();
         }
     }
-}
+}    // ====================== END ACTION ======================

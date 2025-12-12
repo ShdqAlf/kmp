@@ -7,17 +7,17 @@
         <div class="col-xl">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">{{ $subtitle }}</h5>
+                    <h5 class="mb-0">{{ $title }}</h5>
                     {{-- <small class="text-muted float-end">Merged input group</small> --}}
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('kelolauser.store') }}">
+                    <form method="POST" action="{{ route('arsip.update', $arsip->id) }}">
                         @csrf
+                        @method('PUT')
 
-                        @include('page.kelolauser._forms')
+                        @include('page.arsip._forms')
 
-
-                        <x-btn-input :href="route('kelolauser.index')" />
+                        <x-btn-input :href="route('arsip.index')" />
                     </form>
                 </div>
             </div>

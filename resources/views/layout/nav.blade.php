@@ -8,11 +8,12 @@
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <div class="navbar-nav align-items-center">
-            <div class="nav-item d-flex align-items-center">
+            {{-- <div class="nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
                 <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
                     aria-label="Search..." />
-            </div>
+            </div> --}}
+            <h4 class="fw-bold py-3">KMP BPN</h4>
         </div>
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -69,7 +70,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}">
+                        <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#LogoutModal">
                             <i class="bx bx-power-off me-2"></i>
                             <span class="align-middle">Keluar</span>
                         </a>
@@ -79,3 +80,30 @@
         </ul>
     </div>
 </nav>
+
+<div class="modal fade" id="LogoutModal" tabindex="-1" aria-labelledby="LogoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('logout') }}" method="POST" class="modal-content">
+            @csrf
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="LogoutModalLabel">Keluar?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Apakah Anda yakin ingin keluar dari sistem?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Batal
+                </button>
+
+                <button type="submit" class="btn btn-danger">
+                    Keluar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

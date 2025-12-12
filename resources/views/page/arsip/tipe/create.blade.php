@@ -11,13 +11,12 @@
                     {{-- <small class="text-muted float-end">Merged input group</small> --}}
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('kelolauser.store') }}">
+                    <form method="POST" action="{{ route('arsip.tipe.store') }}">
                         @csrf
 
-                        @include('page.kelolauser._forms')
+                        @include('page.arsip.tipe._forms')
 
-
-                        <x-btn-input :href="route('kelolauser.index')" />
+                        <x-btn-input :href="route('arsip.tipe.index')" />
                     </form>
                 </div>
             </div>
