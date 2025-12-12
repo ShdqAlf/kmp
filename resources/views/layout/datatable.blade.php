@@ -9,10 +9,19 @@
 
     <script>
         $(document).ready(function () {
-            $('#datatable-users').DataTable({
+            $('#datatable').DataTable({
                 pageLength: 10,
                 lengthChange: true,
                 ordering: true,
+            });
+        });
+
+        $(document).ready(function () {
+            $('#datatable-arsip').DataTable({
+                pageLength: 10,
+                lengthChange: true,
+                ordering: true,
+                searching: false,
             });
         });
     </script>

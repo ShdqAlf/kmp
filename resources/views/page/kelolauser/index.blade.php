@@ -4,21 +4,22 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> {{ $title }}</h4>
-        <a href="{{ route('kelolauser.create') }}" class="btn btn-primary">Tambah User</a>
+        <x-head-index :title="$title" />
+        <x-btn-add :href="route('kelolauser.create')" title="Tambah Users" />
     </div>
 
     <div class="card">
         <div class="table-responsive p-4 text-nowrap">
-            <table class="table" id="datatable-users">
+            <h4 class="fw-bold py-3 mb-4">{{ $subtitle }}</h4>
+            <table class="table" id="datatable">
                 <thead class="table-dark">
                     <tr>
-                        <th class="text-white">Number</th>
+                        <th class="text-white">#</th>
                         <th class="text-white">Nama Lengkap</th>
                         <th class="text-white">Email - Username</th>
                         <th class="text-white">Role</th>
                         <th class="text-white">Terakhir Login</th>
-                        <th class="text-white">Actions</th>
+                        <th class="text-white">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -55,7 +56,7 @@
                                         <a class="dropdown-item" href="{{ route('kelolauser.edit', $item->id) }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                            
+
                                         <x-delete id="deleteUser{{ $item->id }}"
                                             action="{{ route('kelolauser.destroy', $item->id) }}"
                                             message="Yakin ingin menghapus user ini?" />
