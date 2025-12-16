@@ -2,9 +2,45 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Archive extends Model
 {
-    //
+    use HasFactory;
+
+    // Definisikan kolom-kolom yang dapat diisi
+    protected $fillable = [
+        'standardization_id',
+        'user_id',
+        'division_id',
+        'type_id',
+        'title',
+        'description',
+        'date'
+    ];
+
+    // Relasi dengan tabel Standardization
+    public function standardization()
+    {
+        return $this->belongsTo(Standardization::class);
+    }
+
+    // Relasi dengan tabel Division
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
+    }
+
+    // Relasi dengan tabel Type
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
+    // Relasi dengan tabel Document
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }

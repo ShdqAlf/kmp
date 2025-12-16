@@ -1,26 +1,37 @@
 @extends('layout.body', ['title' => $title])
 
 @section('content')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span> {{ $title }}</h4>
 
-    <div class="row">
-        <div class="col-xl">
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">{{ $title }}</h5>
-                    {{-- <small class="text-muted float-end">Merged input group</small> --}}
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('arsip.store') }}">
-                        @csrf
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
-                        @include('page.arsip._forms')
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span> {{ $title }}</h4>
 
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{{ $title }}</h5>
+                {{-- <small class="text-muted float-end">Merged input group</small> --}}
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('arsip.store') }}" enctype="multipart/form-data">
+                    @csrf
 
-                        <x-btn-input :href="route('arsip.index')" />
-                    </form>
-                </div>
+                    @include('page.arsip._forms')
+
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <!-- <x-btn-input :href="route('arsip.index')" /> -->
+                </form>
             </div>
         </div>
     </div>
+</div>
 @endsection
