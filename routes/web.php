@@ -11,6 +11,7 @@ use App\Http\Controllers\Menu\TypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\LaporanController;
 
 // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -74,6 +75,15 @@ Route::middleware(['auth'])->group(function () {
                         ->parameters(['' => 'standarisasi']);
                 });
             });
+        });
+
+        Route::prefix('laporan')->name('laporan.')->group(function () {
+            // Route untuk halaman index (laporan)
+            Route::get('/', [LaporanController::class, 'index'])->name('index');
+
+            // Route ekspor PDF
+            Route::get('export', [LaporanController::class, 'exportPdf'])
+                ->name('exportPdf');
         });
     });
     // ============== END STAFF & PETUGAS ============== 

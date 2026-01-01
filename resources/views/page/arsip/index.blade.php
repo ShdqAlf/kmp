@@ -9,15 +9,17 @@
 
 <div class="d-flex justify-content-between align-items-center">
     <x-head-index :title="$title" />
-    <x-btn-add :href="route('arsip.create')" title="Tambah Arsip" />
-</div>
-
-<div class="d-flex justify-content-end mb-3">
-    <div class="input-group" style="width: 280px;">
-        <span class="input-group-text bg-white border-end-0">
-            <i class="bx bx-search fs-5"></i>
-        </span>
-        <input type="text" id="kmp-search" class="form-control border-start-0" placeholder="Cari arsip...">
+    <div class="d-flex align-items-center gap-2">
+        <div class="position-relative">
+            <span class="position-absolute top-50 start-0 translate-middle-y ps-3 text-muted">
+                <i class="bx bx-search"></i>
+            </span>
+            <input type="text"
+                id="arsip-search"
+                class="form-control ps-5"
+                placeholder="Cari arsip...">
+        </div>
+        <x-btn-add :href="route('arsip.create')" title="Tambah Arsip" />
     </div>
 </div>
 

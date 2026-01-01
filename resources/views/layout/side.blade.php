@@ -104,7 +104,7 @@ $role = auth()->user()->role;
 
         @if ($role !== 2) {{-- Tanpaa Petugas Arsip --}}
         <li class="menu-item {{ request()->is('laporan*') ? 'active' : '' }}">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('laporan.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Laporan</div>
             </a>

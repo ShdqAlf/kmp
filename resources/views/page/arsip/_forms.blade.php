@@ -8,7 +8,7 @@
             aria-describedby="title-addon" value="{{ old('title', $archives->title ?? '') }}">
     </div>
     @error('title')
-        <small class="text-danger">{{ $message }}</small>
+    <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
@@ -17,14 +17,14 @@
     <label class="form-label" for="division">Divisi</label>
     <select id="division" name="division" class="form-select">
         @foreach ($division as $div)
-            <option value="{{ $div->id }}"
-                {{ old('division', $archives->division_id ?? '') == $div->id ? 'selected' : '' }}>
-                {{ $div->name }}
-            </option>
+        <option value="{{ $div->id }}"
+            {{ old('division', $archives->division_id ?? '') == $div->id ? 'selected' : '' }}>
+            {{ $div->name }}
+        </option>
         @endforeach
     </select>
     @error('division')
-        <small class="text-danger">{{ $message }}</small>
+    <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
@@ -34,14 +34,14 @@
     <label class="form-label" for="archive_type">Tipe Arsip</label>
     <select id="archive_type" name="archive_type" class="form-select">
         @foreach ($types as $type)
-            <option value="{{ $type->id }}"
-                {{ old('archive_type', $archives->archive_type ?? '') == $type->id ? 'selected' : '' }}>
-                {{ $type->name }}
-            </option>
+        <option value="{{ $type->id }}"
+            {{ old('archive_type', $archives->archive_type ?? '') == $type->id ? 'selected' : '' }}>
+            {{ $type->name }}
+        </option>
         @endforeach
     </select>
     @error('archive_type')
-        <small class="text-danger">{{ $message }}</small>
+    <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
@@ -50,14 +50,14 @@
     <label class="form-label" for="standardization">Standarisasi</label>
     <select id="standardization" name="standardization" class="form-select">
         @foreach ($standardizations as $standardization)
-            <option value="{{ $standardization->id }}"
-                {{ old('standardization', $archives->standardization ?? '') == $standardization->id ? 'selected' : '' }}>
-                {{ $standardization->name }}
-            </option>
+        <option value="{{ $standardization->id }}"
+            {{ old('standardization', $archives->standardization ?? '') == $standardization->id ? 'selected' : '' }}>
+            {{ $standardization->name }}
+        </option>
         @endforeach
     </select>
     @error('standardization')
-        <small class="text-danger">{{ $message }}</small>
+    <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
@@ -67,7 +67,7 @@
     <input type="date" id="archive_date" name="archive_date" class="form-control"
         value="{{ old('date', $archives->date ?? '') }}">
     @error('archive_date')
-        <small class="text-danger">{{ $message }}</small>
+    <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
 
@@ -76,19 +76,20 @@
     <label class="form-label" for="files">Upload File</label>
     <input type="file" id="files" name="files[]" class="form-control" multiple>
     @error('files')
-        <small class="text-danger">{{ $message }}</small>
+    <small class="text-danger">{{ $message }}</small>
     @enderror
     <!-- Drag and Drop Area -->
-    <div class="file-drop-area" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+    <div class="file-drop-area" id="drop-area" style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
         <p>Drag & Drop files here or click to select files</p>
     </div>
 </div>
+
 
 <hr>
 <h5 class="mb-3">Detail Berita Acara</h5>
 
 @php
-    $selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
+$selectedJenisBA = old('jenis_ba', $archives->jenis_ba ?? '');
 @endphp
 
 <div class="mb-3">
@@ -284,5 +285,54 @@
 
         // trigger saat load (edit / validation error)
         toggleForms();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('files');
+
+        // Event saat file di-drag dan diseret ke area drop
+        dropArea.addEventListener('dragover', function(event) {
+            event.preventDefault();
+            dropArea.style.backgroundColor = '#f0f0f0';
+        });
+
+        // Event saat file keluar dari area drop
+        dropArea.addEventListener('dragleave', function(event) {
+            dropArea.style.backgroundColor = '';
+        });
+
+        // Event saat file di-drop
+        dropArea.addEventListener('drop', function(event) {
+            event.preventDefault();
+            dropArea.style.backgroundColor = '';
+
+            const files = event.dataTransfer.files;
+            const currentFiles = fileInput.files;
+            const newFiles = Array.from(files);
+
+            // Gabungkan file yang di-drop dengan file yang sudah ada
+            const combinedFiles = [...currentFiles, ...newFiles];
+
+            const dataTransfer = new DataTransfer();
+            combinedFiles.forEach(file => {
+                dataTransfer.items.add(file);
+            });
+
+            fileInput.files = dataTransfer.files;
+
+            displayFileNames(fileInput.files);
+        });
+
+        // Trigger klik pada input file ketika area drop diklik
+        dropArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Menampilkan nama file yang di-drop di dalam area drop
+        function displayFileNames(files) {
+            let fileNames = Array.from(files).map(file => file.name).join(', ');
+            dropArea.innerHTML = `<p>${fileNames}</p>`;
+        }
     });
 </script>
